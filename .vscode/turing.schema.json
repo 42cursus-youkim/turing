@@ -93,7 +93,10 @@
         },
         "action": {
           "title": "Action",
-          "minLength": 1,
+          "enum": [
+            "LEFT",
+            "RIGHT"
+          ],
           "type": "string"
         }
       },
