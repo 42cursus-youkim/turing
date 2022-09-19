@@ -15,15 +15,30 @@ github: 42cursus-youkim/turing
 category: Language
 
 ghc-options: >
-  -Wall -fno-warn-incomplete-uni-patterns
-  -XQuasiQuotes
+  -j -Wall -fno-warn-incomplete-uni-patterns
+
+default-extensions:
+  [QuasiQuotes, DeriveGeneric, OverloadedStrings, BlockArguments]
 
 dependencies:
   - base >= 4.15 && < 5
-  - QuickCheck >= 2.14 && < 3
+  - containers
+  - text
   - aeson >= 2.1.0
   - PyF >= 0.11.0
 
 executable:
   main: Main.hs
   source-dirs: src
+
+tests:
+  spec:
+    cpp-options: -DTEST
+    main: Spec.hs
+    source-dirs:
+      - test
+      - src
+    dependencies:
+      - QuickCheck
+      - hspec == 2.*
+      - HUnit >= 1.6.0.0
