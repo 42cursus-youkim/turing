@@ -1,0 +1,29 @@
+name: exciting-turing
+
+version: 0.1.0.0
+synopsis: Turing Machine in Haskell, yo...
+description: |
+  Un *exciting* journey on
+  - installing Haskell (with LD errors)
+  - using cabal (with weirder cradle errors)
+  - using hackage (with even weirder build failures)
+  - and more...
+
+author: scarf005 <greenscarf005@gmail.com>
+license: MIT
+github: 42cursus-youkim/turing
+category: Language
+
+ghc-options: >
+  -Wall -fno-warn-incomplete-uni-patterns
+  -XQuasiQuotes
+
+dependencies:
+  - base >= 4.15 && < 5
+  - QuickCheck >= 2.14 && < 3
+  - aeson >= 2.1.0
+  - PyF >= 0.11.0
+
+executable:
+  main: Main.hs
+  source-dirs: src

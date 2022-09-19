@@ -1,0 +1,108 @@
+{
+  "title": "Program",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "description": "Name of program",
+      "minLength": 1,
+      "type": "string"
+    },
+    "alphabet": {
+      "title": "Alphabet",
+      "description": "Program symbols of the program",
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1
+      }
+    },
+    "blank": {
+      "title": "Blank",
+      "description": "Symbol to render as blank tape during execution",
+      "minLength": 1,
+      "maxLength": 1,
+      "type": "string"
+    },
+    "states": {
+      "title": "States",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "initial": {
+      "title": "Initial",
+      "minLength": 1,
+      "type": "string"
+    },
+    "finals": {
+      "title": "Finals",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "transitions": {
+      "title": "Transitions",
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Action"
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "alphabet",
+    "blank",
+    "states",
+    "initial",
+    "finals",
+    "transitions"
+  ],
+  "definitions": {
+    "Action": {
+      "title": "Action",
+      "type": "object",
+      "properties": {
+        "read": {
+          "title": "Read",
+          "minLength": 1,
+          "maxLength": 1,
+          "type": "string"
+        },
+        "to_state": {
+          "title": "To State",
+          "minLength": 1,
+          "type": "string"
+        },
+        "write": {
+          "title": "Write",
+          "minLength": 1,
+          "maxLength": 1,
+          "type": "string"
+        },
+        "action": {
+          "title": "Action",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "read",
+        "to_state",
+        "write",
+        "action"
+      ]
+    }
+  }
+}
