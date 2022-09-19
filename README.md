@@ -1,2 +1,1 @@
-# turing
-It's a turing machine, yo......
+docs/index.md
