@@ -1,0 +1,20 @@
+scanright :: init {
+  '.1-'      :: ->
+  '=' => '.' :: <- :: eraseone
+}
+
+eraseone {
+  '1'        :: <- :: subone
+  '-' => '.' :: <- :: HALT
+}
+
+subone {
+  '1'        :: <-
+  '-'        :: <- :: skip
+}
+
+skip {
+  '.'        :: <-
+  '1' => '.' :: -> :: scanright
+}
+

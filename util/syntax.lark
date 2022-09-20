@@ -1,0 +1,32 @@
+start: state*
+
+NAME: /[^\W\d]\w*/
+CHAR: /"."/ | /'.'/
+CHARS: /"[^\"]*"/ | /'[^\']*'/
+DIRECTION: "<-" | "->"
+
+state: name modifier "{" matches "}"
+matches: match+
+match: read write "::" direction transition
+read: CHARS
+write: ["=>" CHAR]
+
+name: NAME
+modifier: ["::" INIT | FINAL]
+direction: DIRECTION
+transition: ["::" NAME]
+
+INIT: "init"
+FINAL: "final"
+
+COMMENT: /#[^\n]*/
+      | "###" /(.|\n)+/ "###"
+
+%import common.WS
+
+%ignore WS
+%ignore COMMENT
+
+// Pipe-separated list
+ps_list{item}: item ("|" item)*
+_ps_list{item}: item ("|" item)*
