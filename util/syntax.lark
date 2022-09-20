@@ -1,23 +1,28 @@
-start: state*
+start: blank state+
 
+blank: CHAR _SEP "blank"
+
+// Procedure
+state: name "{" matches "}"
+
+name: NAME
+matches: match+
+
+// Match Section
+match: read write _SEP direction transition
+
+read: CHARS
+write: ["=>" CHAR]
+direction: DIRECTION
+transition: [_SEP NAME]
+
+// Terminal
 NAME: /[^\W\d]\w*/
 CHAR: /"."/ | /'.'/
 CHARS: /"[^\"]*"/ | /'[^\']*'/
+
 DIRECTION: "<-" | "->"
-
-state: name modifier "{" matches "}"
-matches: match+
-match: read write "::" direction transition
-read: CHARS
-write: ["=>" CHAR]
-
-name: NAME
-modifier: ["::" INIT | FINAL]
-direction: DIRECTION
-transition: ["::" NAME]
-
-INIT: "init"
-FINAL: "final"
+_SEP: "|"
 
 COMMENT: /#[^\n]*/
       | "###" /(.|\n)+/ "###"
@@ -26,7 +31,3 @@ COMMENT: /#[^\n]*/
 
 %ignore WS
 %ignore COMMENT
-
-// Pipe-separated list
-ps_list{item}: item ("|" item)*
-_ps_list{item}: item ("|" item)*

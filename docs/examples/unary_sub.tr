@@ -1,20 +1,29 @@
-scanright :: init {
-  '.1-'      :: ->
-  '=' => '.' :: <- :: eraseone
+### UNARY_SUB
+calculate
+###
+
+
+# blank character must be specified
+'.' | blank
+
+# First state becomes the initial state
+scanright {
+  '.1-'      | ->
+  '=' => '.' | <- | eraseone
 }
 
+# Other states here
 eraseone {
-  '1'        :: <- :: subone
-  '-' => '.' :: <- :: HALT
+  '1'        | <- | subone
+  '-' => '.' | <- | HALT
 }
 
 subone {
-  '1'        :: <-
-  '-'        :: <- :: skip
+  '1'        | <-
+  '-'        | <- | skip
 }
 
 skip {
-  '.'        :: <-
-  '1' => '.' :: -> :: scanright
+  '.'        | <-
+  '1' => '.' | -> | scanright
 }
-
