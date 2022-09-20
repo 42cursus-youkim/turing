@@ -16,7 +16,7 @@ def gen_settings(schema: Path, start_from: Path):
     return {
         "json.schemas": [
             {
-                "fileMatch": [f"./{p}/*.json" for p in start_from.glob("**/")],
+                "fileMatch": [f"/{p}/*.json" for p in start_from.glob("**/")],
                 "url": schema.as_uri(),
             }
         ],

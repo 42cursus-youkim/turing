@@ -1,10 +1,7 @@
 {
   "json.schemas": [
     {
-      "fileMatch": [
-        "./docs/*.json",
-        "./docs/examples/*.json"
-      ],
+      "fileMatch": ["docs/examples/*.json"],
       "url": "file:///home/scarf/Repo/turing/.vscode/turing.schema.json"
     }
   ],
