@@ -39,6 +39,8 @@ executable exciting-turing
       DeriveGeneric
       BlockArguments
       LambdaCase
+      InstanceSigs
+      MultiWayIf
   ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns
 
   build-depends:
@@ -68,6 +70,8 @@ test-suite spec
       DeriveGeneric
       BlockArguments
       LambdaCase
+      InstanceSigs
+      MultiWayIf
   ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns
 
   cpp-options: -DTEST
