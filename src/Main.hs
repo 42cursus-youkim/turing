@@ -1,33 +1,17 @@
 module Main where
 
-import qualified Data.Map as Map
+import Data.Model
 import PyF (fmt)
-
-data Action = Action
-  { read :: Char,
-    to_state :: String,
-    write :: Char,
-    action :: String
-  }
-  deriving (Eq, Show)
-
-data Program = Program
-  { name :: String,
-    alphabet :: [Char],
-    blank :: Char,
-    states :: [String],
-    initial :: String,
-    final :: [String],
-    transitions :: Map.Map String Action
-  }
-  deriving (Show)
+import Util (termWidth)
 
 main :: IO ()
-main =
-  putStrLn [fmt|{hello}, {world}|]
+main = do
+  -- readFile "docs/examples/unary_sub.json" >>= print
+  -- print str
+  -- print act
+  termWidth >>= print
   where
-    hello = "Hello"
-    world = "World"
-
--- where
--- act = Action {read = 'a', to_state = "q1", write = 'b', action = "R"}
+    str = [fmt|{hello}, {world}|] :: String
+    hello = "Hello" :: String
+    world = "World" :: String
+    act = Action {read_ = '.', to_state = "scanright", write = '.', action = "RIGHT"}
