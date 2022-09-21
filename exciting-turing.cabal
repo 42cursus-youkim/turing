@@ -28,13 +28,13 @@ source-repository head
 executable exciting-turing
   main-is: Main.hs
   other-modules:
+      Model
       Paths_exciting_turing
   hs-source-dirs:
       src
   default-extensions:
       QuasiQuotes
       DeriveGeneric
-      OverloadedStrings
       BlockArguments
   ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns
 
@@ -51,6 +51,7 @@ test-suite spec
   main-is: Spec.hs
   other-modules:
       Main
+      Model
       Paths_exciting_turing
   hs-source-dirs:
       test
@@ -58,7 +59,6 @@ test-suite spec
   default-extensions:
       QuasiQuotes
       DeriveGeneric
-      OverloadedStrings
       BlockArguments
   ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns
 
