@@ -28,7 +28,9 @@ source-repository head
 executable exciting-turing
   main-is: Main.hs
   other-modules:
-      Model
+      Data.Machine
+      Data.Model
+      Util
       Paths_exciting_turing
   hs-source-dirs:
       src
@@ -36,6 +38,7 @@ executable exciting-turing
       QuasiQuotes
       DeriveGeneric
       BlockArguments
+      LambdaCase
   ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns
 
   build-depends:
@@ -43,6 +46,8 @@ executable exciting-turing
     , aeson >=2.1.0
     , base >=4.15 && <5
     , containers
+    , pretty-terminal
+    , terminal-size
     , text
   default-language: Haskell2010
 
@@ -50,8 +55,10 @@ test-suite spec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Data.Machine
+      Data.Model
       Main
-      Model
+      Util
       Paths_exciting_turing
   hs-source-dirs:
       test
@@ -60,6 +67,7 @@ test-suite spec
       QuasiQuotes
       DeriveGeneric
       BlockArguments
+      LambdaCase
   ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns
 
   cpp-options: -DTEST
@@ -71,5 +79,7 @@ test-suite spec
     , base >=4.15 && <5
     , containers
     , hspec ==2.*
+    , pretty-terminal
+    , terminal-size
     , text
   default-language: Haskell2010

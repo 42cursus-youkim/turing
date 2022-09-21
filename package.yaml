@@ -17,7 +17,7 @@ category: Language
 ghc-options: >
   -j -Wall -fno-warn-incomplete-uni-patterns
 
-default-extensions: [QuasiQuotes, DeriveGeneric, BlockArguments]
+default-extensions: [QuasiQuotes, DeriveGeneric, BlockArguments, LambdaCase]
 
 dependencies:
   - base >= 4.15 && < 5
@@ -25,6 +25,8 @@ dependencies:
   - text
   - aeson >= 2.1.0
   - PyF >= 0.11.0
+  - terminal-size
+  - pretty-terminal
 
 executable:
   main: Main.hs
