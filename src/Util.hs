@@ -28,7 +28,6 @@ termWidth = size <&> maybe 80 width
 
 boldCol :: Color -> String -> String
 boldCol c = color c . style Bold
-
 capitalize :: String -> String
 capitalize =
   concatMap (\(c : cs) -> toUpper c : cs) . groupBy ((==) `on` isSpace)

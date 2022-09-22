@@ -2,27 +2,30 @@
 
 module Main where
 
-import Data.Machine (Tape (..))
-import Data.Model
-import GHC.TypeLits (ErrorMessage (Text))
-import PyF (fmt)
-import Util (header, termWidth, unindent)
+import Data.Aeson (decode, encode, fromJSON)
+import qualified Data.ByteString.Lazy as B
+import qualified Data.Map as M
+import Data.Maybe (fromJust, fromMaybe)
+import Model.Action
+import Model.Program
+import Util (header)
+
+testFile :: FilePath
+testFile = "docs/examples/unary_sub.json"
+
+getJSON :: IO B.ByteString
+getJSON = B.readFile testFile
 
 main :: IO ()
 main = do
-  -- readFile "docs/examples/unary_sub.json" >>= print
-  -- print str
-  -- print act
-  -- termWidth >>= print
-  -- print tape
-  -- print act
-  -- print act2
-  header "unary_sub"
-  -- print $ unindent "  hello\n  world"
-  where
-    -- str = [fmt|{hello}, {world}|] :: String
-    -- hello = "Hello"
-    -- world = "World"
-    act = Action {read_ = '.', to_state = "scanright", write = '.', action = "RIGHT"}
-    act2 = Action {read_ = '.', to_state = "scanright", write = '1', action = "LEFT"}
-    tape = Tape {left = "111", cursor = '1', right = "000"}
+  j <- getJSON
+  let d = fromJust (decode j :: Maybe Program)
+  print d
+
+-- print $ encode d
+-- where
+
+-- putStrLn $ showAction "scanright" d
+
+-- case d of
+-- Nothing -> putStrLn "Error parsing JSON"

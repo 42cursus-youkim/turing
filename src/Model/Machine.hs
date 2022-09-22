@@ -1,6 +1,10 @@
-module Data.Machine (Tape (..), Machine (..)) where
+module Model.Machine
+  ( Tape (..),
+  -- Machine (..),
+  )
+where
 
-import Data.Model (Program)
+-- import Data.Model (Program)
 import System.Console.Pretty (Color (..), Style (..), color, style)
 
 data Tape = Tape
@@ -15,8 +19,8 @@ instance Show Tape where
     where
       curs = color Red . style Bold $ [h]
 
-data Machine = Machine
-  { tape :: Tape,
-    program :: Program,
-    state :: String
-  }
+-- data Machine = Machine
+--   { tape :: Tape,
+--     program :: Program,
+--     state :: String
+--   }

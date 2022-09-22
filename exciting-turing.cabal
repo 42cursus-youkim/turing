@@ -28,8 +28,9 @@ source-repository head
 executable exciting-turing
   main-is: Main.hs
   other-modules:
-      Data.Machine
-      Data.Model
+      Model.Action
+      Model.Machine
+      Model.Program
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -60,9 +61,11 @@ test-suite spec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Data.Machine
-      Data.Model
+      Data.UnarySub
       Main
+      Model.Action
+      Model.Machine
+      Model.Program
       Util
       Paths_exciting_turing
   hs-source-dirs:
