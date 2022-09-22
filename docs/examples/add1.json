@@ -1,0 +1,50 @@
+{
+  "name": "add1",
+  "alphabet": ["0", " ", "1"],
+  "blank": " ",
+  "states": ["right", "carry", "done"],
+  "initial": "right",
+  "finals": ["done"],
+  "transitions": {
+    "right": [
+      {
+        "read": "1",
+        "to_state": "right",
+        "write": "R",
+        "action": "RIGHT"
+      },
+      {
+        "read": "0",
+        "to_state": "right",
+        "write": "R",
+        "action": "RIGHT"
+      },
+      {
+        "read": " ",
+        "to_state": "carry",
+        "write": " ",
+        "action": "LEFT"
+      }
+    ],
+    "carry": [
+      {
+        "read": "1",
+        "to_state": "carry",
+        "write": "0",
+        "action": "LEFT"
+      },
+      {
+        "read": "0",
+        "to_state": "done",
+        "write": "1",
+        "action": "LEFT"
+      },
+      {
+        "read": " ",
+        "to_state": "done",
+        "write": "1",
+        "action": "LEFT"
+      }
+    ]
+  }
+}
