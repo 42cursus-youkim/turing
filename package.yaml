@@ -15,7 +15,7 @@ github: 42cursus-youkim/turing
 category: Language
 
 ghc-options: >
-  -j -Wall -fno-warn-incomplete-uni-patterns
+  -j -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
 
 default-extensions:
   - QuasiQuotes
@@ -24,6 +24,8 @@ default-extensions:
   - LambdaCase
   - InstanceSigs
   - MultiWayIf
+  - DeriveGeneric
+  - DeriveAnyClass
 
 dependencies:
   - base >= 4.15 && < 5
@@ -33,6 +35,7 @@ dependencies:
   - PyF >= 0.11.0
   - terminal-size
   - pretty-terminal
+  - bytestring
 
 executable:
   main: Main.hs

@@ -1,17 +1,18 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Util
-  ( stripL,
-    stripR,
+  ( stripR,
     termWidth,
     boldCol,
     header,
   )
 where
 
-import Data.Char ( isSpace, toUpper )
+import Data.Char (isSpace, toUpper)
 import Data.Function (on)
-import Data.List ( groupBy )
+import Data.Functor ((<&>))
+import Data.List (groupBy)
+import Data.Maybe (fromMaybe)
 import PyF (fmtTrim)
 import System.Console.Pretty (Color (..), Style (..), color, style)
 import System.Console.Terminal.Size (Window (width), size)
@@ -23,10 +24,7 @@ stripR :: Char -> String -> String
 stripR x = reverse . stripL x . reverse
 
 termWidth :: IO Int
-termWidth =
-  size >>= \case
-    Nothing -> return 80
-    Just s -> return $ width s
+termWidth = size <&> maybe 80 width
 
 boldCol :: Color -> String -> String
 boldCol c = color c . style Bold
