@@ -36,6 +36,7 @@ dependencies:
   - terminal-size
   - pretty-terminal
   - bytestring
+  - errors
 
 executable:
   main: Main.hs

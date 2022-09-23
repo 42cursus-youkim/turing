@@ -4,7 +4,9 @@ module Util
   ( stripR,
     termWidth,
     boldCol,
-    header,
+    capitalize,
+    slugify,
+    putStrIndent,
   )
 where
 
@@ -28,21 +30,15 @@ termWidth = size <&> maybe 80 width
 
 boldCol :: Color -> String -> String
 boldCol c = color c . style Bold
+
 capitalize :: String -> String
-capitalize =
-  concatMap (\(c : cs) -> toUpper c : cs) . groupBy ((==) `on` isSpace)
+capitalize = concatMap (\(c : cs) -> toUpper c : cs) . words
 
 slugify :: String -> String
 slugify = map (\c -> if c == '_' then ' ' else c)
 
-header :: String -> IO ()
-header name =
-  do
-    w <- termWidth
-    let line = replicate w '*'
-        slugged = capitalize . slugify $ name
-    putStrLn
-      [fmtTrim|
-      {line}
-      *{slugged:^{w - 2}}*
-      {line}|]
+indent :: Int -> String -> String
+indent n = unlines . map (replicate n ' ' ++) . lines
+
+putStrIndent :: String -> IO ()
+putStrIndent = putStr . indent 2

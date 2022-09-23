@@ -52,6 +52,7 @@ executable exciting-turing
     , base >=4.15 && <5
     , bytestring
     , containers
+    , errors
     , pretty-terminal
     , terminal-size
     , text
@@ -91,6 +92,7 @@ test-suite spec
     , base >=4.15 && <5
     , bytestring
     , containers
+    , errors
     , hspec ==2.*
     , pretty-terminal
     , terminal-size
