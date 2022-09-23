@@ -1,10 +1,11 @@
 module Model.Action (Action (..), pfAction) where
 
 import Data.Aeson
+import Data.Aeson.Types (Parser)
 import GHC.Generics (Generic)
 import PyF (fmt)
 import System.Console.Pretty (Color (..), Style (..), color, style)
-import Util
+import Util ( stripR, boldCol )
 
 data Action = Action
   { read_ :: String,
@@ -17,6 +18,7 @@ data Action = Action
 instance ToJSON Action
 
 instance FromJSON Action where
+  parseJSON :: Value -> Parser Action
   parseJSON = genericParseJSON defaultOptions {fieldLabelModifier = stripR '_'}
 
 pfAction :: String -> Action -> String

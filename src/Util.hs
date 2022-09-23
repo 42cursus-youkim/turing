@@ -9,9 +9,12 @@ module Util
     indent,
     putStrIndent,
     note,
+    mapTuple,
   )
 where
 
+import Control.Arrow ((***))
+import Control.Monad (join)
 import Data.Char (isSpace, toUpper)
 import Data.Function (on)
 import Data.Functor ((<&>))
@@ -20,6 +23,9 @@ import Data.Maybe (fromMaybe)
 import PyF (fmtTrim)
 import System.Console.Pretty (Color (..), Style (..), color, style)
 import System.Console.Terminal.Size (Window (width), size)
+
+mapTuple :: (a -> b) -> (a, a) -> (b, b)
+mapTuple = join (***)
 
 stripL :: Char -> String -> String
 stripL x = dropWhile (== x)

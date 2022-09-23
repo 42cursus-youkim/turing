@@ -28,7 +28,8 @@ instance FromJSON Program
 instance ToJSON Program
 
 pfTransition :: String -> [Action] -> String
-pfTransition state xs = [fmt|{boldCol Magenta state}\n{indent 2 s}\n|]
+pfTransition state xs =
+  [fmt|{boldCol Magenta state} {{\n{indent 2 s}}}\n\n|]
   where
     s = unlines $ map (pfAction state) xs
 
@@ -37,27 +38,18 @@ pfTransitions xs = concatMap (uncurry pfTransition) $ M.toList xs
 
 pfHeader :: String -> Int -> String
 pfHeader n w =
-  let line = replicate w '*'
-      slugged = capitalize . slugify $ n
-   in boldCol
-        Blue
-        [fmtTrim|
-      {line}
-      *{' ':^{w-2}}*
-      *{slugged:^{w - 2}}*
-      *{' ':^{w-2}}*
-      {line}|]
+  let slugged = capitalize . slugify $ n
+      side = [fmt|*{' ':^{w-2}}*\n|]
+      line = replicate w '*' ++ "\n"
+   in boldCol Blue [fmt|{line}{side}*{slugged:^{w - 2}}*{side}{line}|]
 
 pprintProgram :: Program -> IO ()
 pprintProgram (Program n a b s i f t) = do
-  
   putStrLn . pfHeader n =<< termWidth
-  putStrIndent
-    [fmtTrim|\n
-    Alphabet: {a:s}
-    Blank: {b:s}
-    States: {s:s}
-    Initial: {i:s}
-    Finals: {f:s}
-    Transitions:\n\n|]
+  putStrLn $ unlines $ zipWith fn keys values
   putStrLn $ pfTransitions t
+  where
+    fn :: String -> String -> String
+    fn k v = [fmt|{boldCol Cyan k}: {color Yellow v}|]
+    keys = ["Alphabet", "Blank", "States", "Initial", "Finals", "Transitions"]
+    values = [show a, b, show s, i, show f, ""]
