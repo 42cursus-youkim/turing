@@ -2,7 +2,6 @@
 
 module Main where
 
-import Control.Error
 import Data.Aeson (decode, encode, fromJSON)
 import qualified Data.ByteString.Lazy as B
 import Data.Either
@@ -10,6 +9,7 @@ import qualified Data.Map as M
 import Data.Maybe (fromJust, fromMaybe)
 import Model.Action
 import Model.Program
+import Util (note)
 
 testFile :: FilePath
 testFile = "docs/examples/unary_sub.json"

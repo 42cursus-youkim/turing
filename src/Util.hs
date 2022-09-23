@@ -6,7 +6,9 @@ module Util
     boldCol,
     capitalize,
     slugify,
+    indent,
     putStrIndent,
+    note,
   )
 where
 
@@ -42,3 +44,6 @@ indent n = unlines . map (replicate n ' ' ++) . lines
 
 putStrIndent :: String -> IO ()
 putStrIndent = putStr . indent 2
+
+note :: a -> Maybe b -> Either a b
+note x = maybe (Left x) Right
