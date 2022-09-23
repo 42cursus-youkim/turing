@@ -1,11 +1,16 @@
 module Machine.Machine
   ( Machine (..),
+    -- runMachine,
+    initMachine,
+    -- runMachine,
+    pprintMachine,
   )
 where
 
-import Machine.Tape (Tape)
+import qualified Data.Map as M
+import Machine.Tape (Tape, pfTape, pfTapeLong)
 import qualified Machine.Tape as T
-import Model.Program (Program (initial))
+import Model.Program (Program (finals, initial, transitions))
 import PyF (fmtTrim)
 import System.Console.Pretty (Color (..), Style (..), color, style)
 
@@ -16,12 +21,33 @@ data Machine = Machine
     stuck :: Bool
   }
 
--- | Assumes are inputs are correct.
+pprintMachine :: Machine -> IO ()
+pprintMachine m = do
+  putStrLn
+    [fmtTrim|
+      Tape: {pfTape (tape m)}
+      State: {state m}
+      Stuck: {stuck m:s}|]
+
+-- | Assumes that inputs are correct.
 initMachine :: String -> Program -> Machine
 initMachine s p =
   Machine
-    { tape = T.fromString s,
+    { tape = T.initTape s,
       program = p,
       state = initial p,
       stuck = False
     }
+
+-- runMachine :: Machine -> IO ()
+-- runMachine m = do
+
+step :: Machine -> Machine
+step m
+  | ok = m
+  | finished = m
+  | otherwise = m {stuck = True}
+  where
+    p = program m
+    ok = state m `elem` M.keys (transitions p)
+    finished = state m `elem` finals p

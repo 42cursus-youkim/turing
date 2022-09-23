@@ -2,7 +2,7 @@ module Machine.Tape
   ( Tape (..),
     pfTape,
     pfTapeLong,
-    fromString,
+    initTape,
   )
 where
 
@@ -15,9 +15,6 @@ data Tape = Tape
     right :: [Char]
   }
 
-fromString :: String -> Tape
-fromString s = Tape [] (head s) (tail s)
-
 ann :: String -> String
 ann = color Red . style Bold
 
@@ -28,3 +25,6 @@ pfTapeLong :: Tape -> String
 pfTapeLong t =
   [fmtTrim|{pfTape t}
   {ann "^":<{length (left t)}}|]
+
+initTape :: String -> Tape
+initTape s = Tape [] (head s) (tail s)

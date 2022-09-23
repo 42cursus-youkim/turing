@@ -1,0 +1,42 @@
+###
+Unary Add
+
+111+11=
+111+11. # mov_until_eq
+111+1.. # rm_rightmost
+11111.. # rm_plus
+###
+
+' ' | blank
+
+mov_until_eq {
+  '1+'       | ->
+  '=' => ' ' | <- | rm_rightmost
+}
+
+rm_rightmost {
+  '1' => ' ' | <- | rm_plus
+}
+
+rm_plus {
+  '1'        | <-
+  '+' => ' ' | <- | HALT
+}
+
+###
+Compiled into
+
+input: '111+11='
+blank: ' '
+start state: mov_until_eq
+table:
+  mov_until_eq:
+    [1, '+']: R
+    '=': { write: ' ', L: rm_rightmost }
+  rm_rightmost:
+    1: { write: ' ', L: rm_plus }
+  rm_plus:
+    1: L
+    '+': { write: 1, R: HALT }
+  HALT:
+###
