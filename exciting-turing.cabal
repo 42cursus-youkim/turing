@@ -28,8 +28,9 @@ source-repository head
 executable exciting-turing
   main-is: Main.hs
   other-modules:
+      Machine.Machine
+      Machine.Tape
       Model.Action
-      Model.Machine
       Model.Program
       Util
       Paths_exciting_turing
@@ -62,9 +63,10 @@ test-suite spec
   main-is: Spec.hs
   other-modules:
       Data.UnarySub
+      Machine.Machine
+      Machine.Tape
       Main
       Model.Action
-      Model.Machine
       Model.Program
       Util
       Paths_exciting_turing
