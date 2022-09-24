@@ -1,9 +1,10 @@
 #!/bin/env python3
 
 
+from typing import Literal
 from pydantic import BaseModel, ConstrainedStr, Field, conlist
 
-from util.utils import print_diff, save_schema
+from utils import print_diff, save_schema
 
 
 class Char(ConstrainedStr):
@@ -22,7 +23,7 @@ class Action(BaseModel):
     read: Char
     to_state: NonEmptyStr
     write: Char
-    action: NonEmptyStr
+    action: Literal["LEFT", "RIGHT"]
 
 
 class Program(BaseModel):

@@ -1,0 +1,33 @@
+start: blank state+
+
+blank: CHAR _SEP "blank"
+
+// Procedure
+state: name "{" matches "}"
+
+name: NAME
+matches: match+
+
+// Match Section
+match: read write _SEP direction transition
+
+read: CHARS
+write: ["=>" CHAR]
+direction: DIRECTION
+transition: [_SEP NAME]
+
+// Terminal
+NAME: /[^\W\d]\w*/
+CHAR: /"."/ | /'.'/
+CHARS: /"[^\"]*"/ | /'[^\']*'/
+
+DIRECTION: "<-" | "->"
+_SEP: "|"
+
+COMMENT: /#[^\n]*/
+      | "###" /(.|\n)+/ "###"
+
+%import common.WS
+
+%ignore WS
+%ignore COMMENT
