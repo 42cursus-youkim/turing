@@ -41,6 +41,10 @@ initMachine s p =
 
 -- runMachine :: Machine -> IO ()
 -- runMachine m = do
+--   step m
+--   pprintMachine m
+
+
 
 step :: Machine -> Machine
 step m
