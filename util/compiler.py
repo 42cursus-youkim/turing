@@ -115,6 +115,6 @@ class Program:
         return cls(states, blank)
 
 
-program = Program.from_file("docs/examples/unary_sub.tr")
+program = Program.from_file("script/unary_sub.tr")
 
 program.compile("unary_sub", indent=2)

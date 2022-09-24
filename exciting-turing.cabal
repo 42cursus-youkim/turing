@@ -28,8 +28,9 @@ source-repository head
 executable exciting-turing
   main-is: Main.hs
   other-modules:
-      Data.Machine
-      Data.Model
+      Model.Action
+      Model.Machine
+      Model.Program
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -39,12 +40,17 @@ executable exciting-turing
       DeriveGeneric
       BlockArguments
       LambdaCase
-  ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns
+      InstanceSigs
+      MultiWayIf
+      DeriveGeneric
+      DeriveAnyClass
+  ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
 
   build-depends:
       PyF >=0.11.0
     , aeson >=2.1.0
     , base >=4.15 && <5
+    , bytestring
     , containers
     , pretty-terminal
     , terminal-size
@@ -55,9 +61,11 @@ test-suite spec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Data.Machine
-      Data.Model
+      Data.UnarySub
       Main
+      Model.Action
+      Model.Machine
+      Model.Program
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -68,7 +76,11 @@ test-suite spec
       DeriveGeneric
       BlockArguments
       LambdaCase
-  ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns
+      InstanceSigs
+      MultiWayIf
+      DeriveGeneric
+      DeriveAnyClass
+  ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
 
   cpp-options: -DTEST
   build-depends:
@@ -77,6 +89,7 @@ test-suite spec
     , QuickCheck
     , aeson >=2.1.0
     , base >=4.15 && <5
+    , bytestring
     , containers
     , hspec ==2.*
     , pretty-terminal
