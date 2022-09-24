@@ -47,7 +47,6 @@ runMachine m = do
   pprintMachine res
 
 
-
 step :: Machine -> Machine
 step m
   | ok = m

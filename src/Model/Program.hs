@@ -50,4 +50,4 @@ pprintProgram (Program n a b s i f t) = do
     fn :: String -> String -> String
     fn k v = [fmt|{boldCol Cyan k}: {color Yellow v}|]
     keys = ["Alphabet", "Blank", "States", "Initial", "Finals", "Transitions"]
-    values = [show a, b, show s, i, show f, ""]
+    values = [pfList a, b, pfList s, i, pfList f, ""]

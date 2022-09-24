@@ -10,6 +10,7 @@ module Util
     putStrIndent,
     note,
     mapTuple,
+    pfList,
   )
 where
 
@@ -18,9 +19,9 @@ import Control.Monad (join)
 import Data.Char (isSpace, toUpper)
 import Data.Function (on)
 import Data.Functor ((<&>))
-import Data.List (groupBy)
+import Data.List (groupBy, intercalate)
 import Data.Maybe (fromMaybe)
-import PyF (fmtTrim)
+import PyF (fmt, fmtTrim)
 import System.Console.Pretty (Color (..), Style (..), color, style)
 import System.Console.Terminal.Size (Window (width), size)
 
@@ -53,3 +54,13 @@ putStrIndent = putStr . indent 2
 
 note :: a -> Maybe b -> Either a b
 note x = maybe (Left x) Right
+
+pfList :: Show a => [a] -> String
+pfList xs = [fmt|{w "["}{ss}{w "]"}|]
+  where
+    w :: String -> String
+    w = color White
+    y :: String -> String
+    y = boldCol Yellow
+    ss = intercalate (w ",") $ map pfElem xs
+    pfElem x = [fmt|{y (show x)}|]
