@@ -28,3 +28,10 @@ pfTapeLong t =
 
 initTape :: String -> Tape
 initTape s = Tape [] (head s) (tail s)
+
+-- data Direction = ToLeft | ToRight
+
+-- moveTape :: Tape -> Direction -> Char -> Tape
+-- moveTape t d b = case d of
+--   ToLeft -> Tape (init (left t)) (last (left t)) (cursor t : right t)
+--   ToRight -> Tape (left t ++ [cursor t]) (head (right t)) (tail (right t))

@@ -4,6 +4,8 @@ module Machine.Machine
     initMachine,
     -- runMachine,
     pprintMachine,
+    -- runMachine,
+    runMachine,
   )
 where
 
@@ -39,10 +41,10 @@ initMachine s p =
       stuck = False
     }
 
--- runMachine :: Machine -> IO ()
--- runMachine m = do
---   step m
---   pprintMachine m
+runMachine :: Machine -> IO ()
+runMachine m = do
+  let res = step m
+  pprintMachine res
 
 
 

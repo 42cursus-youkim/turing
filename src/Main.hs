@@ -4,7 +4,7 @@ module Main where
 
 import qualified Data.Map as M
 import Data.Maybe (fromJust, fromMaybe)
-import Machine.Machine (Machine (..), initMachine, pprintMachine)
+import Machine.Machine (Machine (..), initMachine, pprintMachine, runMachine)
 import Machine.Tape (pfTape)
 import Model.Program (pprintProgram)
 import Model.Reader (readProgram, testFile)
@@ -18,4 +18,4 @@ main = do
       pprintProgram p
       pprintMachine machine
 
--- runMachine (initMachine "111-11=" p)
+      runMachine (initMachine "111-11=" p)

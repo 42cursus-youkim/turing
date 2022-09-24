@@ -25,8 +25,6 @@ data Program = Program
 
 instance FromJSON Program
 
-instance ToJSON Program
-
 pfTransition :: String -> [Action] -> String
 pfTransition state xs =
   [fmt|{boldCol Magenta state} {{\n{indent 2 s}}}\n\n|]
