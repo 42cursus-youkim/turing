@@ -14,7 +14,7 @@ import qualified Data.Text as T
 import GHC.Generics (Generic)
 import PyF (fmt)
 import System.Console.Pretty (Color (..), Style (..), color, style)
-import Util (boldCol, stripR)
+import Util (boldCol, strWhen, stripR, pfChar)
 
 data Direction = ToLeft | ToRight deriving (Show, Eq)
 
@@ -22,14 +22,15 @@ instance FromJSON Direction where
   parseJSON :: Value -> Parser Direction
   parseJSON = withText "Direction" parseAction
 
-pfDirection :: Direction -> String
-pfDirection d = if d == ToLeft then "<-" else "->"
-
 parseAction :: MonadFail f => Text -> f Direction
 parseAction t = case T.unpack t of
   "LEFT" -> pure ToLeft
   "RIGHT" -> pure ToRight
   _ -> fail "Invalid direction"
+
+pfDirection :: Direction -> String
+pfDirection d = if d == ToLeft then "<-" else "->"
+
 
 data Action = Action
   { read_ :: Char,
@@ -46,7 +47,7 @@ instance FromJSON Action where
 pfAction :: String -> Action -> String
 pfAction t (Action r s w a) = [fmt|{rw} | {dir}{into}|]
   where
-    (rc, wc) = (boldCol Cyan [r], boldCol Yellow [w])
-    rw = style Bold $ rc ++ if r == w then "" else [fmt| => {wc}|]
+    (rc, wc) = (pfChar Cyan r, pfChar Yellow w)
+    rw = style Bold $ rc ++ strWhen (r /= w) [fmt| => {wc}|]
     dir = boldCol Green $ pfDirection a
-    into = if t == s then ("" :: String) else [fmt| | {boldCol Red s}|]
+    into = strWhen (t /= s) [fmt| | {boldCol Red s}|]
