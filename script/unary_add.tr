@@ -20,7 +20,7 @@ rm_rightmost {
 
 rm_plus {
   '1'        | <-
-  '+' => ' ' | <- | HALT
+  '+' => '1' | <- | HALT
 }
 
 ###
