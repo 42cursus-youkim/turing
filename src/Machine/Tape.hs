@@ -10,7 +10,7 @@ where
 
 import Model.Action (Direction (..))
 import PyF (fmt, fmtTrim)
-import System.Console.Pretty (Color (Red), Pretty (..), Style (Bold))
+import System.Console.Pretty (Color (..), Pretty (..), Style (Bold))
 
 data Tape = Tape
   { left :: [Char],
@@ -35,11 +35,11 @@ initTape s = Tape [] (head s) (tail s)
 
 moveLeft :: Tape -> Tape
 moveLeft (Tape [] c r b) = Tape [] b (c : r) b
-moveLeft (Tape (l : ls) c r b) = Tape ls l (c : r) b
+moveLeft (Tape l c r b) = Tape (init l) (last l) (c : r) b
 
 moveRight :: Tape -> Tape
-moveRight (Tape l c [] b) = Tape (c : l) b [] b
-moveRight (Tape l c (r : rs) b) = Tape (c : l) r rs b
+moveRight (Tape l c [] b) = Tape (l ++ [c]) b [] b
+moveRight (Tape l c r b) = Tape (l ++ [c]) (head r) (tail r) b
 
 moveTape :: Tape -> Direction -> Tape
 moveTape t d = case d of

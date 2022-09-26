@@ -30,7 +30,7 @@ data Machine = Machine
 pprintMachine :: Machine -> IO ()
 pprintMachine m =
   putStrLn
-    [fmtTrim|{pfTape (tape m)} {state m}|]
+    [fmtTrim|{pfTape (tape m)} {state m} {stuck m:s}|]
 
 -- | Assumes that inputs are correct.
 initMachine :: String -> Program -> Machine
