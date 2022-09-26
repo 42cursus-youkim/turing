@@ -14,7 +14,7 @@ import qualified Data.Text as T
 import GHC.Generics (Generic)
 import PyF (fmt)
 import System.Console.Pretty (Color (..), Style (..), color, style)
-import Util (boldCol, strWhen, stripR, pfChar)
+import Util (boldCol, pfChar, strWhen, stripR)
 
 data Direction = ToLeft | ToRight deriving (Show, Eq)
 
@@ -29,8 +29,9 @@ parseAction t = case T.unpack t of
   _ -> fail "Invalid direction"
 
 pfDirection :: Direction -> String
-pfDirection d = if d == ToLeft then "<-" else "->"
-
+pfDirection d = boldCol Green case d of
+  ToLeft -> "<-"
+  ToRight -> "->"
 
 data Action = Action
   { read_ :: Char,
@@ -49,5 +50,5 @@ pfAction t (Action r s w a) = [fmt|{rw} | {dir}{into}|]
   where
     (rc, wc) = (pfChar Cyan r, pfChar Yellow w)
     rw = style Bold $ rc ++ strWhen (r /= w) [fmt| => {wc}|]
-    dir = boldCol Green $ pfDirection a
+    dir = pfDirection a
     into = strWhen (t /= s) [fmt| | {boldCol Red s}|]
