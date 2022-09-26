@@ -1,26 +1,26 @@
 module Machine.Machine
   ( Machine (..),
-    -- runMachine,
     initMachine,
-    -- runMachine,
     pprintMachine,
-    -- runMachine,
     runMachine,
   )
 where
 
 import qualified Data.Map as M
-import Machine.Tape (Tape, pfTape, pfTapeLong)
+import Machine.Tape (Tape, moveTape, pfTape, pfTapeLong)
 import qualified Machine.Tape as T
-import Model.Program (Program (finals, initial, transitions))
+import Model.Action (Direction (..))
+import Model.Program (Program (blank, finals, initial, transitions))
 import PyF (fmtTrim)
 import System.Console.Pretty (Color (..), Style (..), color, style)
+
+data MachineState = Running | Stuck | Finished deriving (Show, Eq)
 
 data Machine = Machine
   { tape :: Tape,
     program :: Program,
     state :: String,
-    stuck :: Bool
+    stuck :: MachineState
   }
 
 pprintMachine :: Machine -> IO ()
@@ -35,10 +35,10 @@ pprintMachine m = do
 initMachine :: String -> Program -> Machine
 initMachine s p =
   Machine
-    { tape = T.initTape s,
+    { tape = T.initTape s (blank p),
       program = p,
       state = initial p,
-      stuck = False
+      stuck = Running
     }
 
 runMachine :: Machine -> IO ()
@@ -46,13 +46,12 @@ runMachine m = do
   let res = step m
   pprintMachine res
 
-
 step :: Machine -> Machine
 step m
-  | ok = m
-  | finished = m
-  | otherwise = m {stuck = True}
+  | ok = m {tape = moveTape (tape m) ToLeft}
+  | finished = m {stuck = Finished}
+  | otherwise = m {stuck = Stuck}
   where
     p = program m
     ok = state m `elem` M.keys (transitions p)
-    finished = state m `elem` finals p
+    finished = stuck m == Finished || state m `elem` finals p

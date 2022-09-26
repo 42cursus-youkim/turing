@@ -20,7 +20,7 @@ unarySub =
   Program
     { name = "unary_sub",
       alphabet = ["1", ".", "-", "="],
-      blank = ".",
+      blank = '.',
       states = ["scanright", "eraseone", "subone", "skip", "HALT"],
       initial = "scanright",
       finals = ["HALT"],
