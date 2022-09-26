@@ -29,13 +29,14 @@ default-extensions:
 
 dependencies:
   - base >= 4.15 && < 5
-  - containers
   - text
-  - aeson >= 2.1.0
+  - containers
+  - bytestring
   - PyF >= 0.11.0
   - terminal-size
   - pretty-terminal
-  - bytestring
+  - optparse-applicative
+  - aeson >= 2.1.0
 
 executable:
   main: Main.hs

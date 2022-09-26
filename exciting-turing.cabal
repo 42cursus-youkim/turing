@@ -33,6 +33,7 @@ executable exciting-turing
       Model.Action
       Model.Program
       Model.Reader
+      TuringArgs
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -54,6 +55,7 @@ executable exciting-turing
     , base >=4.15 && <5
     , bytestring
     , containers
+    , optparse-applicative
     , pretty-terminal
     , terminal-size
     , text
@@ -70,6 +72,7 @@ test-suite spec
       Model.Action
       Model.Program
       Model.Reader
+      TuringArgs
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -96,6 +99,7 @@ test-suite spec
     , bytestring
     , containers
     , hspec ==2.*
+    , optparse-applicative
     , pretty-terminal
     , terminal-size
     , text

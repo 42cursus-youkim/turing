@@ -54,9 +54,6 @@ runMachine m = do
       pprintMachine m w
       runMachine (step m)
 
--- run :: Machine -> [Machine]
--- run m = scanl step  m
-
 step :: Machine -> Machine
 step m
   | finished = m {stuck = Finished}
