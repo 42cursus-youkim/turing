@@ -4,6 +4,7 @@ module Machine.Tape
     pfTapeLong,
     initTape,
     moveTape,
+    writeTape,
   )
 where
 
@@ -44,3 +45,6 @@ moveTape :: Tape -> Direction -> Tape
 moveTape t d = case d of
   ToLeft -> moveLeft t
   ToRight -> moveRight t
+
+writeTape :: Tape -> Char -> Tape
+writeTape (Tape l _ r b) c = Tape l c r b

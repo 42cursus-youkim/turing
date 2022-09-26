@@ -14,8 +14,5 @@ main = do
   readProgram testFile >>= \case
     Left e -> print e
     Right p -> do
-      let machine = initMachine "111-11=" p
       pprintProgram p
-      pprintMachine machine
-
       runMachine (initMachine "111-11=" p)
