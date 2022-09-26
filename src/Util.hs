@@ -11,6 +11,8 @@ module Util
     note,
     mapTuple,
     pfList,
+    pfChar,
+    strWhen,
   )
 where
 
@@ -54,6 +56,14 @@ putStrIndent = putStr . indent 2
 
 note :: a -> Maybe b -> Either a b
 note x = maybe (Left x) Right
+
+strWhen :: Bool -> String -> String
+strWhen b s = if b then s else ""
+
+pfChar :: Color -> Char -> String
+pfChar col c = boldCol col s
+  where
+    s = if c == ' ' then "' '" else [c]
 
 pfList :: Show a => [a] -> String
 pfList xs = [fmt|{w "["}{ss}{w "]"}|]
