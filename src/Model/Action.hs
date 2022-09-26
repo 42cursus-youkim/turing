@@ -32,9 +32,9 @@ parseAction t = case T.unpack t of
   _ -> fail "Invalid direction"
 
 data Action = Action
-  { read_ :: String,
+  { read_ :: Char,
     to_state :: String,
-    write :: String,
+    write :: Char,
     action :: Direction
   }
   deriving (Generic, Show, Eq)
@@ -46,7 +46,7 @@ instance FromJSON Action where
 pfAction :: String -> Action -> String
 pfAction t (Action r s w a) = [fmt|{rw} | {dir}{into}|]
   where
-    (rc, wc) = (boldCol Cyan r, boldCol Yellow w)
+    (rc, wc) = (boldCol Cyan [r], boldCol Yellow [w])
     rw = style Bold $ rc ++ if r == w then "" else [fmt| => {wc}|]
     dir = boldCol Green $ pfDirection a
     into = if t == s then ("" :: String) else [fmt| | {boldCol Red s}|]
