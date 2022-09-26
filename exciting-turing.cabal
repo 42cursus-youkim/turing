@@ -52,7 +52,7 @@ executable exciting-turing
   build-depends:
       PyF >=0.11.0
     , aeson >=2.1.0
-    , base >=4.15 && <5
+    , base >=4.14 && <5
     , bytestring
     , containers
     , optparse-applicative
@@ -95,7 +95,7 @@ test-suite spec
     , PyF >=0.11.0
     , QuickCheck
     , aeson >=2.1.0
-    , base >=4.15 && <5
+    , base >=4.14 && <5
     , bytestring
     , containers
     , hspec ==2.*
