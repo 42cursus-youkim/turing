@@ -56,12 +56,10 @@ runMachine m = do
 
 step :: Machine -> Machine
 step m
-  | ok = runAction m
   | finished = m {stuck = Finished}
-  | otherwise = m {stuck = Stuck}
+  | otherwise = runAction m
   where
     p = program m
-    ok = state m `M.member` transitions p
     finished = state m `elem` finals p
 
 findRead :: [Action] -> Char -> Maybe Action

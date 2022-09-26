@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           exciting-turing
-version:        0.1.0.0
+version:        0.2.0.0
 synopsis:       Turing Machine in Haskell, yo...
 description:    Un *exciting* journey on
                 - installing Haskell (with LD errors)
@@ -33,6 +33,7 @@ executable exciting-turing
       Model.Action
       Model.Program
       Model.Reader
+      TuringArgs
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -51,9 +52,10 @@ executable exciting-turing
   build-depends:
       PyF >=0.11.0
     , aeson >=2.1.0
-    , base >=4.15 && <5
+    , base >=4.14 && <5
     , bytestring
     , containers
+    , optparse-applicative
     , pretty-terminal
     , terminal-size
     , text
@@ -70,6 +72,7 @@ test-suite spec
       Model.Action
       Model.Program
       Model.Reader
+      TuringArgs
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -92,10 +95,11 @@ test-suite spec
     , PyF >=0.11.0
     , QuickCheck
     , aeson >=2.1.0
-    , base >=4.15 && <5
+    , base >=4.14 && <5
     , bytestring
     , containers
     , hspec ==2.*
+    , optparse-applicative
     , pretty-terminal
     , terminal-size
     , text

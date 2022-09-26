@@ -13,5 +13,3 @@ It's a turing machine, yo......
 # save the flags to your cabal.project.local
 cabal configure --enable-tests --test-show-details=streaming --test-option=--color
 ```
-
-

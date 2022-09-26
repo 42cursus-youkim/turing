@@ -17,14 +17,14 @@ def gen_settings(schema: Path, start_from: Path):
         "json.schemas": [
             {
                 "fileMatch": [f"/{p}/*.json" for p in start_from.glob("**/")],
-                "url": schema.as_uri(),
+                "url": str(schema),
             }
         ],
     }
 
 
 def save_schema(settings: Path, schema: Path, text: str):
-    settings_text = gen_settings(schema, Path("docs")) | BLACK_SETTINGS
+    settings_text = gen_settings(schema, Path("script")) | BLACK_SETTINGS
     schema.write_text(text)
     settings.write_text(json.dumps(settings_text, indent=2))
     settings.parent.mkdir(parents=True, exist_ok=True)

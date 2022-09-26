@@ -43,7 +43,7 @@ if __name__ == "__main__":
     from pathlib import Path
 
     settings = Path(".vscode/settings.json")
-    schema = Path(".vscode/turing.schema.json").absolute()
+    schema = Path(".vscode/turing.schema.json")
 
     text = Program.schema_json(indent=2)
 

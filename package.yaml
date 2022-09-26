@@ -1,6 +1,6 @@
 name: exciting-turing
 
-version: 0.1.0.0
+version: 0.2.0.0
 synopsis: Turing Machine in Haskell, yo...
 description: |
   Un *exciting* journey on
@@ -28,14 +28,15 @@ default-extensions:
   - DeriveAnyClass
 
 dependencies:
-  - base >= 4.15 && < 5
-  - containers
+  - base >= 4.14 && < 5
   - text
-  - aeson >= 2.1.0
+  - containers
+  - bytestring
   - PyF >= 0.11.0
   - terminal-size
   - pretty-terminal
-  - bytestring
+  - optparse-applicative
+  - aeson >= 2.1.0
 
 executable:
   main: Main.hs
