@@ -2,9 +2,21 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Example program (unary add)",
+      "label": "Feed unary_add",
       "type": "shell",
       "command": "hpack && cabal run exciting-turing -- script/unary_add.json '1111+11='",
+      "group": "build"
+    },
+    {
+      "label": "Feed unary_add (stuck)",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/stuck.json '1111+11='",
+      "group": "build"
+    },
+    {
+      "label": "Feed universal turing machine",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/utm.json '>010101100111$00-01|00-00-00-00-1|00-01-00-01-1|00-10-00-10-1|00-11-01-00-0|01-01-10-00-0|01-10-11-00-0|10-01-10-01-0|10-10-11-01-0$'",
       "group": "build"
     }
   ]
