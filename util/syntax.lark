@@ -25,9 +25,10 @@ DIRECTION: "<-" | "->"
 _SEP: "|"
 
 COMMENT: /#[^\n]*/
-      | "###" /(.|\n)+/ "###"
+MULTILINE_COMMENT: /###(.|\n)*?###/
 
 %import common.WS
 
 %ignore WS
 %ignore COMMENT
+%ignore MULTILINE_COMMENT
