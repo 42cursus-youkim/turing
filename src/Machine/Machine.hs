@@ -53,5 +53,8 @@ step m
   | otherwise = m {stuck = Stuck}
   where
     p = program m
-    ok = state m `elem` M.keys (transitions p)
+    ok = state m `M.member` transitions p
     finished = stuck m == Finished || state m `elem` finals p
+
+
+
