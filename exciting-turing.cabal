@@ -32,6 +32,7 @@ executable exciting-turing
       Machine.Tape
       Model.Action
       Model.Program
+      Model.Reader
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -45,7 +46,7 @@ executable exciting-turing
       MultiWayIf
       DeriveGeneric
       DeriveAnyClass
-  ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
+  ghc-options: -j8 -O0 -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
 
   build-depends:
       PyF >=0.11.0
@@ -68,6 +69,7 @@ test-suite spec
       Main
       Model.Action
       Model.Program
+      Model.Reader
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -82,7 +84,7 @@ test-suite spec
       MultiWayIf
       DeriveGeneric
       DeriveAnyClass
-  ghc-options: -j -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
+  ghc-options: -j8 -O0 -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
 
   cpp-options: -DTEST
   build-depends:

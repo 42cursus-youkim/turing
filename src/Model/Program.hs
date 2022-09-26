@@ -15,7 +15,7 @@ type Transitions = Map String [Action]
 data Program = Program
   { name :: String,
     alphabet :: [String],
-    blank :: String,
+    blank :: Char,
     states :: [String],
     initial :: String,
     finals :: [String],
@@ -24,8 +24,6 @@ data Program = Program
   deriving (Generic, Show, Eq)
 
 instance FromJSON Program
-
-instance ToJSON Program
 
 pfTransition :: String -> [Action] -> String
 pfTransition state xs =
@@ -52,4 +50,4 @@ pprintProgram (Program n a b s i f t) = do
     fn :: String -> String -> String
     fn k v = [fmt|{boldCol Cyan k}: {color Yellow v}|]
     keys = ["Alphabet", "Blank", "States", "Initial", "Finals", "Transitions"]
-    values = [show a, b, show s, i, show f, ""]
+    values = [pfList a, show b, pfList s, i, pfList f, ""]

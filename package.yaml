@@ -15,7 +15,7 @@ github: 42cursus-youkim/turing
 category: Language
 
 ghc-options: >
-  -j -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
+  -j8 -O0 -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
 
 default-extensions:
   - QuasiQuotes

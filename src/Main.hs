@@ -2,38 +2,24 @@
 
 module Main where
 
-import Data.Aeson (decode, encode, fromJSON)
-import qualified Data.ByteString.Lazy as B
-import Data.Either
 import qualified Data.Map as M
 import Data.Maybe (fromJust, fromMaybe)
-import Machine.Machine (Machine (..), initMachine, pprintMachine)
+import Machine.Machine (Machine (..), initMachine, pprintMachine, runMachine)
 import Machine.Tape (pfTape)
-import Model.Action
-import Model.Program
-import Util (note)
+import Model.Program (pprintProgram)
+import Model.Reader (readProgram, testFile)
 
-testFile :: FilePath
-testFile = "docs/examples/unary_sub.json"
+utm :: String
+utm = ">010101100111$00-01|00-00-00-00-1|00-01-00-01-1|00-10-00-10-1|00-11-01-00-0|01-01-10-00-0|01-10-11-00-0|10-01-10-01-0|10-10-11-01-0$"
 
-getJSON :: IO B.ByteString
-getJSON = B.readFile testFile
-
-data ProgramError = FileError | ParseError deriving (Show)
-
-readProgram :: FilePath -> IO (Either ProgramError Program)
-readProgram path = do
-  note ParseError . decode <$> B.readFile path
-
--- let machine = Machine program
-
-main :: IO ()
-main = do
-  readProgram testFile >>= \case
+runFrom :: String -> String -> IO ()
+runFrom file input = do
+  readProgram file >>= \case
     Left e -> print e
     Right p -> do
-      let machine = initMachine "111-11=" p
       pprintProgram p
-      pprintMachine machine
+      runMachine (initMachine input p)
 
--- runMachine (initMachine "111-11=" p)
+main :: IO ()
+main = runFrom "docs/examples/utm.json" utm
+  -- runFrom "docs/examples/unary_add.json" "111+11="

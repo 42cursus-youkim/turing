@@ -80,8 +80,7 @@ class Program:
         names = set(s.name for s in self.transitions)
         assert len(names) == len(self.transitions), "duplicate state names"
 
-        self.alphabets = set(flatten(s.alphabet for s in self.transitions))
-        assert self.blank in self.alphabets, f"{self.blank} must be in {self.alphabets}"
+        self.alphabets = set(flatten(s.alphabet for s in self.transitions)) | {self.blank}
 
         to = set().union(*(s.transitions for s in self.transitions))  # type: ignore
         self.states = names | to
@@ -115,6 +114,6 @@ class Program:
         return cls(states, blank)
 
 
-program = Program.from_file("script/unary_sub.tr")
+program = Program.from_file("script/unary_add.tr")
 
 program.compile("unary_sub", indent=2)
