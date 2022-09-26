@@ -10,7 +10,7 @@ import Model.Action
 import Model.Program
 
 testFile :: FilePath
-testFile = "docs/examples/unary_sub.json"
+testFile = "script/unary_sub.json"
 
 getUnarySubJSON :: IO B.ByteString
 getUnarySubJSON = B.readFile testFile

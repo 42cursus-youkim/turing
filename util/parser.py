@@ -28,7 +28,7 @@ class Convert(Transformer):  # type: ignore
 parser = Lark.open("util/syntax.lark", parser="lalr")  # type: ignore
 
 if __name__ == "__main__":
-    tree = parser.parse(Path("docs/examples/unary_sub.tr").read_text())
+    tree = parser.parse(Path("script/unary_sub.tr").read_text())
     print(tree.pretty())
     res = Convert().transform(tree)  # type: ignore
     pprint(res)  # type: ignore
