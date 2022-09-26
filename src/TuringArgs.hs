@@ -10,7 +10,7 @@ import Data.Semigroup ((<>))
 import Options.Applicative
 
 data TuringArgs = TuringArgs
-  { architecture :: FilePath,
+  { instructions :: FilePath,
     tapeInput :: String
   }
   deriving (Show)
@@ -18,8 +18,8 @@ data TuringArgs = TuringArgs
 turingArgs :: Parser TuringArgs
 turingArgs =
   TuringArgs
-    <$> argument str (metavar "FILE" <> help "turing machine in .json format")
-    <*> argument str (metavar "TAPE" <> help "string tape tapeInput")
+    <$> argument str (metavar "FILE" <> help "json description of the machine")
+    <*> argument str (metavar "TAPE" <> help "input of the machine")
 
 opts :: ParserInfo TuringArgs
 opts =
@@ -31,10 +31,6 @@ opts =
     )
 
 {-
-RUN: Normal mode
- positional: JSON_FILE, TAPE_Input
---interactive, -i: Run each step of the program with ENTER
-
 GRAPH: Graph generation mode
 graph JSON_FILE FILE_INPUT: Generate a svg graph of the program
 --out, -o FILE_OUTPUT: Output svg path for the graph (default CWD)

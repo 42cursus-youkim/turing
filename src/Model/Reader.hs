@@ -11,7 +11,7 @@ testFile = "docs/examples/unary_sub.json"
 -- getJSON :: IO B.ByteString
 -- getJSON = B.readFile testFile
 
-data ProgramError = FileError | ParseError deriving (Show)
+data ProgramError = ParseError deriving (Show)
 
 readProgram :: FilePath -> IO (Either ProgramError Program)
 readProgram path = do

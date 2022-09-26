@@ -9,6 +9,7 @@ import Machine.Tape (pfTape)
 import Model.Program (pprintProgram)
 import Model.Reader (readProgram, testFile)
 import Options.Applicative
+import PyF (fmt)
 import TuringArgs
 import Util (termWidth)
 
@@ -18,7 +19,7 @@ utm = ">010101100111$00-01|00-00-00-00-1|00-01-00-01-1|00-10-00-10-1|00-11-01-00
 runFrom :: TuringArgs -> IO ()
 runFrom (TuringArgs file input) = do
   readProgram file >>= \case
-    Left e -> print e
+    Left e -> putStrLn [fmt|read failed with: {e:s}|]
     Right p -> do
       pprintProgram p
       let m = initMachine input p
@@ -27,8 +28,3 @@ runFrom (TuringArgs file input) = do
 main :: IO ()
 main = execParser opts >>= runFrom
 
--- main :: IO ()
--- main =
---   runFrom "docs/examples/utm.json" utm
-
--- runFrom "docs/examples/unary_add.json" "111+11="
