@@ -1,27 +1,26 @@
 module Arg.Args
   ( Args (..),
     CommonOpts (..),
+    GraphOpts (..),
+    Command (..),
     args,
     opts,
   )
 where
 
+import Arg.Command
 import Arg.CommonOpts
-import Arg.FileArgs (FileArgs, GraphOpts)
-import Arg.Graph (graph)
+import Arg.Opts
 import Arg.TapeInput
 import Data.List
 import Data.Semigroup ((<>))
 import Options.Applicative
 
-data Args = Args CommonOpts GraphOpts
+data Args = Args CommonOpts Command
   deriving (Show)
 
--- fileArgs :: Parser FileArgs
--- fileArgs = tapeInput <|> graph
-
 args :: Parser Args
-args = Args <$> commonOpts <*> graph
+args = Args <$> commonOpts <*> commands
 
 opts :: ParserInfo Args
 opts =

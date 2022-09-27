@@ -29,9 +29,10 @@ executable exciting-turing
   main-is: Main.hs
   other-modules:
       Arg.Args
+      Arg.Command
       Arg.CommonOpts
-      Arg.FileArgs
       Arg.Graph
+      Arg.Opts
       Arg.TapeInput
       Machine.Machine
       Machine.Tape
@@ -71,9 +72,10 @@ test-suite spec
   other-modules:
       Data.UnarySub
       Arg.Args
+      Arg.Command
       Arg.CommonOpts
-      Arg.FileArgs
       Arg.Graph
+      Arg.Opts
       Arg.TapeInput
       Machine.Machine
       Machine.Tape

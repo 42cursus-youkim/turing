@@ -1,10 +1,10 @@
-module Arg.Graph (GraphOpts (..), graph) where
+module Arg.Graph (GraphOpts (..), graphOpts) where
 
-import Arg.FileArgs (FileArgs (..), GraphOpts (..))
+import Arg.Opts (GraphOpts (..))
 import Options.Applicative
 
-graph :: Parser GraphOpts
-graph =
+graphOpts :: Parser GraphOpts
+graphOpts =
   GraphOpts
     <$> argument
       str

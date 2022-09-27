@@ -1,13 +1,7 @@
-module Arg.CommonOpts (CommonOpts (..), commonOpts) where
+module Arg.CommonOpts (commonOpts) where
 
+import Arg.Opts
 import Options.Applicative
-
-data CommonOpts = CommonOpts
-  { instruction :: FilePath,
-    quiet :: Bool,
-    logFile :: Maybe FilePath
-  }
-  deriving (Show)
 
 commonOpts :: Parser CommonOpts
 commonOpts =
