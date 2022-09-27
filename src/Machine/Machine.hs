@@ -3,6 +3,7 @@ module Machine.Machine
     initMachine,
     pprintMachine,
     runMachine,
+    pprintHistory,
   )
 where
 
@@ -29,10 +30,12 @@ data Machine = Machine
     stuck :: MachineState
   }
 
+pfMachine :: Machine -> Int -> String
+pfMachine m w =
+  [fmtTrim|{pfTape (tape m):<{w * 2 `div` 3 + 9}} {boldCol Magenta (state m)} {stuck m:s}|]
+
 pprintMachine :: Machine -> Int -> IO ()
-pprintMachine m w =
-  putStrLn
-    [fmtTrim|{pfTape (tape m):<{w * 2 `div` 3 + 9}} {boldCol Magenta (state m)}|]
+pprintMachine m w = putStrLn $ pfMachine m w
 
 -- | Assumes that inputs are correct.
 initMachine :: String -> Program -> Machine
@@ -44,15 +47,19 @@ initMachine s p =
       stuck = Running
     }
 
-runMachine :: Machine -> IO ()
-runMachine m = do
+runMachine :: Machine -> [Machine]
+runMachine m = takeWhile (\x -> stuck x == Running) (iterate step m)
+
+pprintHistory :: [Machine] -> IO ()
+pprintHistory history = do
   w <- termWidth
-  case stuck m of
-    Stuck -> putStrLn "Machine is stuck!"
-    Finished -> return ()
-    Running -> do
-      pprintMachine m w
-      runMachine (step m)
+  mapM_ (pprintMachine <*> pure w) history
+  case lastState of
+    Stuck -> putStrLn $ boldCol Red "Machine is Stuck"
+    Finished -> putStrLn $ boldCol Green "Machine is Finished"
+    _ -> return ()
+  where
+    lastState = stuck . step $ last history
 
 step :: Machine -> Machine
 step m
