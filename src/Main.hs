@@ -2,6 +2,7 @@
 
 module Main where
 
+import Control.Monad (unless)
 import qualified Data.Map as M
 import Data.Maybe (fromJust, fromMaybe)
 import Machine.Machine (Machine (..), initMachine, pprintHistory, runMachine)
@@ -14,13 +15,14 @@ import TuringArgs (TuringArgs (TuringArgs), opts)
 import Util (termWidth)
 
 runFrom :: TuringArgs -> IO ()
-runFrom (TuringArgs file input) = do
+runFrom (TuringArgs file input quiet) = do
   readProgram file >>= \case
     Left e -> putStrLn [fmt|read failed with: {e:s}|]
     Right p -> do
-      pprintProgram p
       let history = runMachine $ initMachine input p
-      pprintHistory history
+      unless quiet do
+        pprintProgram p
+        pprintHistory history
 
 main :: IO ()
 main = execParser opts >>= runFrom

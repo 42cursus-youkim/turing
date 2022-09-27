@@ -11,7 +11,8 @@ import Options.Applicative
 
 data TuringArgs = TuringArgs
   { instructions :: FilePath,
-    tapeInput :: String
+    tapeInput :: String,
+    quiet :: Bool
   }
   deriving (Show)
 
@@ -20,6 +21,7 @@ turingArgs =
   TuringArgs
     <$> argument str (metavar "FILE" <> help "json description of the machine")
     <*> argument str (metavar "TAPE" <> help "input of the machine")
+    <*> switch (long "quiet" <> short 'q' <> help "do not print result")
 
 opts :: ParserInfo TuringArgs
 opts =
