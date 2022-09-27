@@ -2,7 +2,10 @@ module Machine.Machine
   ( Machine (..),
     initMachine,
     pprintMachine,
+    logfHistory,
     runMachine,
+    pprintHistory,
+    benchmarkInputs,
   )
 where
 
@@ -10,7 +13,7 @@ import Control.Monad (when)
 import Data.List (find)
 import qualified Data.Map as M
 import Debug.Trace (trace)
-import Machine.Tape (Tape (..), moveTape, pfTape, pfTapeLong)
+import Machine.Tape (Tape (..), moveTape, pfTape)
 import qualified Machine.Tape as T
 import Model.Action (Action (read_, to_state), Direction (..))
 import qualified Model.Action as A
@@ -28,15 +31,18 @@ data Machine = Machine
     state :: String,
     stuck :: MachineState
   }
+  deriving (Show)
+
+pfMachine :: Machine -> Int -> String
+pfMachine m w =
+  [fmtTrim|{pfTape (tape m):<{w * 2 `div` 3 + 9}} {boldCol Magenta (state m)}|]
 
 pprintMachine :: Machine -> Int -> IO ()
-pprintMachine m w =
-  putStrLn
-    [fmtTrim|{pfTape (tape m):<{w * 2 `div` 3 + 9}} {boldCol Magenta (state m)}|]
+pprintMachine m w = putStrLn $ pfMachine m w
 
 -- | Assumes that inputs are correct.
-initMachine :: String -> Program -> Machine
-initMachine s p =
+initMachine :: Program -> String -> Machine
+initMachine p s =
   Machine
     { tape = T.initTape s (P.blank p),
       program = p,
@@ -44,15 +50,39 @@ initMachine s p =
       stuck = Running
     }
 
-runMachine :: Machine -> IO ()
-runMachine m = do
+runMachine :: Machine -> [Machine]
+runMachine m = takeWhile (\x -> stuck x == Running) (iterate step m)
+
+benchmarkInput :: Machine -> (Int, Int)
+benchmarkInput m =
+  let result = runMachine m
+      inputLength = T.tapeSize $ tape m
+      stepLength = length result
+   in (inputLength, stepLength)
+
+benchmarkInputs :: Program -> [String] -> [(Int, Int)]
+benchmarkInputs p = map (benchmarkInput . initMachine p)
+
+lastState :: [Machine] -> MachineState
+lastState = stuck . step . last
+
+pprintHistory :: [Machine] -> IO ()
+pprintHistory history = do
   w <- termWidth
-  case stuck m of
-    Stuck -> putStrLn "Machine is stuck!"
-    Finished -> return ()
-    Running -> do
-      pprintMachine m w
-      runMachine (step m)
+  mapM_ (pprintMachine <*> pure w) history
+  case lastState history of
+    Stuck -> putStrLn $ boldCol Red "Machine is Stuck"
+    Finished -> putStrLn $ boldCol Green "Machine is Finished"
+    _ -> return ()
+
+logfHistory :: [Machine] -> String
+logfHistory history = do
+  [fmtTrim|{p:s}\n{unlines tapes}|]
+  where
+    p = program $ head history
+    logfTape (Tape l h r _) = [fmt|[{l}{h}{r}]|]
+    fn h = [fmt|{logfTape t} {state h}\n {'^':>{length (left t)}}|] where t = tape h
+    tapes = map fn history
 
 step :: Machine -> Machine
 step m

@@ -28,12 +28,17 @@ source-repository head
 executable exciting-turing
   main-is: Main.hs
   other-modules:
+      Arg.Args
+      Arg.Command
+      Arg.CommonOpts
+      Arg.Graph
+      Arg.Opts
+      Arg.TapeInput
       Machine.Machine
       Machine.Tape
       Model.Action
       Model.Program
       Model.Reader
-      TuringArgs
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -50,7 +55,9 @@ executable exciting-turing
   ghc-options: -j8 -O0 -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
 
   build-depends:
-      PyF >=0.11.0
+      Chart >=1.9.4
+    , Chart-diagrams >=1.9.4
+    , PyF >=0.11.0
     , aeson >=2.1.0
     , base >=4.14 && <5
     , bytestring
@@ -66,13 +73,18 @@ test-suite spec
   main-is: Spec.hs
   other-modules:
       Data.UnarySub
+      Arg.Args
+      Arg.Command
+      Arg.CommonOpts
+      Arg.Graph
+      Arg.Opts
+      Arg.TapeInput
       Machine.Machine
       Machine.Tape
       Main
       Model.Action
       Model.Program
       Model.Reader
-      TuringArgs
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -91,7 +103,9 @@ test-suite spec
 
   cpp-options: -DTEST
   build-depends:
-      HUnit >=1.6.0.0
+      Chart >=1.9.4
+    , Chart-diagrams >=1.9.4
+    , HUnit >=1.6.0.0
     , PyF >=0.11.0
     , QuickCheck
     , aeson >=2.1.0

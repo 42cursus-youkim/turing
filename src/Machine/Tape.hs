@@ -1,16 +1,17 @@
 module Machine.Tape
   ( Tape (..),
     pfTape,
-    pfTapeLong,
     initTape,
     moveTape,
     writeTape,
+    tapeSize,
   )
 where
 
 import Model.Action (Direction (..))
 import PyF (fmt, fmtTrim)
 import System.Console.Pretty (Color (..), Pretty (..), Style (Bold))
+import Util (boldCol)
 
 data Tape = Tape
   { left :: [Char],
@@ -18,17 +19,13 @@ data Tape = Tape
     right :: [Char],
     blank :: Char
   }
+  deriving (Show)
 
-ann :: String -> String
-ann = color Red . style Bold
+tapeSize :: Tape -> Int
+tapeSize (Tape l _ r _) = length l + length r + 1
 
 pfTape :: Tape -> String
-pfTape (Tape l h r _) = [fmt|[{l}{ann [h]}{r}]|]
-
-pfTapeLong :: Tape -> String
-pfTapeLong t =
-  [fmtTrim|{pfTape t}
-  {ann "^":<{length (left t)}}|]
+pfTape (Tape l h r _) = [fmt|[{l}{boldCol Red [h]}{r}]|]
 
 initTape :: String -> Char -> Tape
 initTape s = Tape [] (head s) (tail s)

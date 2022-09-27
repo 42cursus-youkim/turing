@@ -1,30 +1,41 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Main where
 
+import Arg.Args
+import Control.Monad (unless, when)
 import qualified Data.Map as M
-import Data.Maybe (fromJust, fromMaybe)
-import Machine.Machine (Machine (..), initMachine, pprintMachine, runMachine)
+import Data.Maybe (fromJust, fromMaybe, isJust)
+import Machine.Machine (Machine (..), benchmarkInputs, initMachine, logfHistory, pprintHistory, runMachine)
 import Machine.Tape (pfTape)
-import Model.Program (pprintProgram)
-import Model.Reader (readProgram, testFile)
-import Options.Applicative
+import Model.Program (Program (Program), pprintProgram)
+import Model.Reader (readProgram)
+import Options.Applicative (execParser)
 import PyF (fmt)
-import TuringArgs
 import Util (termWidth)
 
-utm :: String
-utm = ">010101100111$00-01|00-00-00-00-1|00-01-00-01-1|00-10-00-10-1|00-11-01-00-0|01-01-10-00-0|01-10-11-00-0|10-01-10-01-0|10-10-11-01-0$"
+runSingle :: Program -> String -> CommonOpts -> IO ()
+runSingle p input (CommonOpts _ silent logging) = do
+  let history = runMachine $ initMachine p input
+  unless silent do
+    pprintProgram p
+    pprintHistory history
+  case logging of
+    Just f -> writeFile f (logfHistory history)
+    Nothing -> pure ()
 
-runFrom :: TuringArgs -> IO ()
-runFrom (TuringArgs file input) = do
-  readProgram file >>= \case
+runMultiple :: Program -> GraphOpts -> IO ()
+runMultiple p (GraphOpts input _output) = do
+  tapes <- readFile input
+  let inputs = lines tapes
+      result = benchmarkInputs p inputs
+  print result -- TODO: save svg graph
+
+parseInput :: Args -> IO ()
+parseInput (Args opt input) = do
+  readProgram (instruction opt) >>= \case
     Left e -> putStrLn [fmt|read failed with: {e:s}|]
-    Right p -> do
-      pprintProgram p
-      let m = initMachine input p
-      runMachine m
+    Right p -> case input of
+      Run tapeText -> runSingle p tapeText opt
+      Graph gopts -> runMultiple p gopts
 
 main :: IO ()
-main = execParser opts >>= runFrom
-
+main = execParser opts >>= parseInput
