@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Main where
 
 import Control.Monad (unless)
@@ -8,19 +6,19 @@ import Data.Maybe (fromJust, fromMaybe)
 import Machine.Machine (Machine (..), initMachine, pprintHistory, runMachine)
 import Machine.Tape (pfTape)
 import Model.Program (pprintProgram)
-import Model.Reader (readProgram, testFile)
+import Model.Reader (readProgram)
 import Options.Applicative (execParser)
 import PyF (fmt)
-import TuringArgs (TuringArgs (TuringArgs), opts)
+import TuringArgs (TuringArgs (..), opts)
 import Util (termWidth)
 
 runFrom :: TuringArgs -> IO ()
-runFrom (TuringArgs file input quiet) = do
+runFrom (TuringArgs file input silent) = do
   readProgram file >>= \case
     Left e -> putStrLn [fmt|read failed with: {e:s}|]
     Right p -> do
       let history = runMachine $ initMachine input p
-      unless quiet do
+      unless silent do
         pprintProgram p
         pprintHistory history
 
