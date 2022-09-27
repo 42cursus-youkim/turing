@@ -32,7 +32,7 @@ data Machine = Machine
 
 pfMachine :: Machine -> Int -> String
 pfMachine m w =
-  [fmtTrim|{pfTape (tape m):<{w * 2 `div` 3 + 9}} {boldCol Magenta (state m)} {stuck m:s}|]
+  [fmtTrim|{pfTape (tape m):<{w * 2 `div` 3 + 9}} {boldCol Magenta (state m)}|]
 
 pprintMachine :: Machine -> Int -> IO ()
 pprintMachine m w = putStrLn $ pfMachine m w

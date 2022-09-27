@@ -9,11 +9,11 @@ import Model.Program (pprintProgram)
 import Model.Reader (readProgram)
 import Options.Applicative (execParser)
 import PyF (fmt)
-import TuringArgs (TuringArgs (..), opts)
+import TuringArgs (Args(..), CommonOpts(..), Target(..), args, opts)
 import Util (termWidth)
 
-runFrom :: TuringArgs -> IO ()
-runFrom (TuringArgs file input silent) = do
+runFrom :: Args -> IO ()
+runFrom (Args (CommonOpts silent) (Target file input)) = do
   readProgram file >>= \case
     Left e -> putStrLn [fmt|read failed with: {e:s}|]
     Right p -> do
@@ -24,3 +24,5 @@ runFrom (TuringArgs file input silent) = do
 
 main :: IO ()
 main = execParser opts >>= runFrom
+
+

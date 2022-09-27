@@ -1,32 +1,34 @@
-module TuringArgs
-  ( opts,
-    turingArgs,
-    TuringArgs (..),
-  )
-where
+module TuringArgs where
 
 import Data.List
 import Data.Semigroup ((<>))
 import Options.Applicative
 
-data TuringArgs = TuringArgs
-  { instructions :: FilePath,
-    tapeInput :: String,
-    quiet :: Bool
-  }
+data Args = Args CommonOpts Target
   deriving (Show)
 
-turingArgs :: Parser TuringArgs
-turingArgs =
-  TuringArgs
-    <$> argument str (metavar "FILE" <> help "json description of the machine")
-    <*> argument str (metavar "TAPE" <> help "input of the machine")
-    <*> switch (long "quiet" <> short 'q' <> help "do not print result")
+newtype CommonOpts = CommonOpts {quiet :: Bool}
+  deriving (Show)
 
-opts :: ParserInfo TuringArgs
+commonOpts :: Parser CommonOpts
+commonOpts = CommonOpts <$> switch (long "quiet" <> short 'q' <> help "do not print result")
+
+data Target = Target {instructions :: FilePath, tapeInput :: String}
+  deriving (Show)
+
+target :: Parser Target
+target =
+  Target
+    <$> argument str (metavar "FILE" <> help "json description of the machine")
+    <*> argument str (metavar "TAPE" <> help "input tape")
+
+args :: Parser Args
+args = Args <$> commonOpts <*> target
+
+opts :: ParserInfo Args
 opts =
   info
-    (turingArgs <**> helper)
+    (args <**> helper)
     ( fullDesc
         <> progDesc "Run a turing machine or generate performance graph"
         <> header "exciting-turing - a Turing machine simulator"
