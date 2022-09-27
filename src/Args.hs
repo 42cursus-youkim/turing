@@ -7,26 +7,30 @@ import Options.Applicative
 data Args = Args CommonOpts TapeInput
   deriving (Show)
 
-data CommonOpts = CommonOpts {quiet :: Bool, doLog :: Maybe FilePath, instruction :: FilePath}
+data CommonOpts = CommonOpts
+  { instruction :: FilePath,
+    quiet :: Bool,
+    logfile :: Maybe FilePath
+  }
   deriving (Show)
 
 commonOpts :: Parser CommonOpts
 commonOpts =
   CommonOpts
-    <$> switch
+    <$> argument str (metavar "FILE" <> help "json description of the machine")
+    <*> switch
       ( long "quiet"
           <> short 'q'
           <> help "do not print result"
       )
-    <*> option
-      auto
-      ( long "logging"
-          <> short 'q'
-          <> metavar "FILE"
-          <> value Nothing
-          <> help "save log file to path"
+    <*> optional
+      ( strOption
+          ( long "log"
+              <> short 'l'
+              <> metavar "FILE"
+              <> help "save log file to path"
+          )
       )
-    <*> argument str (metavar "FILE" <> help "json description of the machine")
 
 type TapeInput = String
 

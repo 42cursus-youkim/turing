@@ -24,3 +24,6 @@ cabal.project.local~
 
 # mkdocs
 site
+
+# Log
+*.log

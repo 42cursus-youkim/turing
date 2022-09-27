@@ -2,6 +2,7 @@ module Machine.Machine
   ( Machine (..),
     initMachine,
     pprintMachine,
+    logfHistory,
     runMachine,
     pprintHistory,
   )
@@ -11,7 +12,7 @@ import Control.Monad (when)
 import Data.List (find)
 import qualified Data.Map as M
 import Debug.Trace (trace)
-import Machine.Tape (Tape (..), moveTape, pfTape, pfTapeLong)
+import Machine.Tape (Tape (..), moveTape, pfTape)
 import qualified Machine.Tape as T
 import Model.Action (Action (read_, to_state), Direction (..))
 import qualified Model.Action as A
@@ -29,6 +30,7 @@ data Machine = Machine
     state :: String,
     stuck :: MachineState
   }
+  deriving (Show)
 
 pfMachine :: Machine -> Int -> String
 pfMachine m w =
@@ -50,16 +52,26 @@ initMachine s p =
 runMachine :: Machine -> [Machine]
 runMachine m = takeWhile (\x -> stuck x == Running) (iterate step m)
 
+lastState :: [Machine] -> MachineState
+lastState = stuck . step . last
+
 pprintHistory :: [Machine] -> IO ()
 pprintHistory history = do
   w <- termWidth
   mapM_ (pprintMachine <*> pure w) history
-  case lastState of
+  case lastState history of
     Stuck -> putStrLn $ boldCol Red "Machine is Stuck"
     Finished -> putStrLn $ boldCol Green "Machine is Finished"
     _ -> return ()
+
+logfHistory :: [Machine] -> String
+logfHistory history = do
+  [fmtTrim|{p:s}\n{unlines tapes}|]
   where
-    lastState = stuck . step $ last history
+    p = program $ head history
+    logfTape (Tape l h r _) = [fmt|[{l}{h}{r}]|]
+    fn h = [fmt|{logfTape t} {state h}\n {'^':>{length (left t)}}|] where t = tape h
+    tapes = map fn history
 
 step :: Machine -> Machine
 step m
