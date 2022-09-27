@@ -27,7 +27,7 @@ runMultiple p (GraphOpts input _output) = do
   tapes <- readFile input
   let inputs = lines tapes
       result = benchmarkInputs p inputs
-  print result
+  print result -- TODO: save svg graph
 
 parseInput :: Args -> IO ()
 parseInput (Args opt input) = do
