@@ -28,7 +28,9 @@ source-repository head
 executable exciting-turing
   main-is: Main.hs
   other-modules:
-      Args
+      Arg.Args
+      Arg.CommonOpts
+      Arg.TapeInput
       Machine.Machine
       Machine.Tape
       Model.Action
@@ -66,7 +68,9 @@ test-suite spec
   main-is: Spec.hs
   other-modules:
       Data.UnarySub
-      Args
+      Arg.Args
+      Arg.CommonOpts
+      Arg.TapeInput
       Machine.Machine
       Machine.Tape
       Main

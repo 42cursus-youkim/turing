@@ -1,6 +1,6 @@
 module Main where
 
-import Args
+import Arg.Args
   ( Args (..),
     CommonOpts (..),
     args,
