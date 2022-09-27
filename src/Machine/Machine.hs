@@ -57,8 +57,8 @@ benchmarkInput :: Machine -> (Int, Int)
 benchmarkInput m =
   let result = runMachine m
       inputLength = T.tapeSize $ tape m
-      step' = length result
-   in (inputLength, step')
+      stepLength = length result
+   in (inputLength, stepLength)
 
 benchmarkInputs :: Program -> [String] -> [(Int, Int)]
 benchmarkInputs p = map (benchmarkInput . initMachine p)
