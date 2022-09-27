@@ -28,12 +28,12 @@ source-repository head
 executable exciting-turing
   main-is: Main.hs
   other-modules:
+      Args
       Machine.Machine
       Machine.Tape
       Model.Action
       Model.Program
       Model.Reader
-      TuringArgs
       Util
       Paths_exciting_turing
   hs-source-dirs:
@@ -66,13 +66,13 @@ test-suite spec
   main-is: Spec.hs
   other-modules:
       Data.UnarySub
+      Args
       Machine.Machine
       Machine.Tape
       Main
       Model.Action
       Model.Program
       Model.Reader
-      TuringArgs
       Util
       Paths_exciting_turing
   hs-source-dirs:
