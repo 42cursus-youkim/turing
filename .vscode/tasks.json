@@ -14,9 +14,21 @@
       "group": "build"
     },
     {
-      "label": "Graph unary_add",
+      "label": "Graph unary_add O(N)",
       "type": "shell",
       "command": "hpack && cabal run exciting-turing -- script/unary_add.json graph test/inputs/unary_add.txt",
+      "group": "build"
+    },
+    {
+      "label": "Graph palindrome O(N ^ 2)",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/palindrome.json graph test/inputs/palindrome.txt",
+      "group": "build"
+    },
+    {
+      "label": "Graph unary_add with UTM O(N ^ 2)?",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/utm.json graph test/inputs/utm.txt",
       "group": "build"
     },
     {

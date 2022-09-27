@@ -1,6 +1,18 @@
 # turing
 It's a turing machine, yo......
 
+## Time complexity graph
+
+### Unary add
+![unary_add.svg](./unary_add.svg)
+
+### Palindrome
+![palindrome.svg](./palindrome.svg)
+
+### Unary add on universal turing machine (UTM)
+![utm-with-unary-add.svg](./utm-with-unary-add.svg)
+
+
 ## Visualize .yml examples
 [turing_machine_viaulization](https://turingmachine.io/)
 

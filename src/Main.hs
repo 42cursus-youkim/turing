@@ -6,11 +6,12 @@ import qualified Data.Map as M
 import Data.Maybe (fromJust, fromMaybe, isJust)
 import Machine.Machine (Machine (..), benchmarkInputs, initMachine, logfHistory, pprintHistory, runMachine)
 import Machine.Tape (pfTape)
-import Model.Program (Program (Program), pprintProgram)
+import Model.Program (Program (Program, name), pprintProgram)
 import Model.Reader (readProgram)
 import Options.Applicative (execParser)
 import PyF (fmt)
 import Util (termWidth)
+import Draw (saveTimeComplexity)
 
 runSingle :: Program -> String -> CommonOpts -> IO ()
 runSingle p input (CommonOpts _ silent logging) = do
@@ -23,11 +24,11 @@ runSingle p input (CommonOpts _ silent logging) = do
     Nothing -> pure ()
 
 runMultiple :: Program -> GraphOpts -> IO ()
-runMultiple p (GraphOpts input _output) = do
+runMultiple p (GraphOpts input output) = do
   tapes <- readFile input
   let inputs = lines tapes
       result = benchmarkInputs p inputs
-  print result -- TODO: save svg graph
+  saveTimeComplexity (name p) result output
 
 parseInput :: Args -> IO ()
 parseInput (Args opt input) = do
