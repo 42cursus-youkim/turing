@@ -4,6 +4,7 @@ module Machine.Tape
     initTape,
     moveTape,
     writeTape,
+    tapeSize,
   )
 where
 
@@ -19,6 +20,9 @@ data Tape = Tape
     blank :: Char
   }
   deriving (Show)
+
+tapeSize :: Tape -> Int
+tapeSize (Tape l _ r _) = length l + length r + 1
 
 pfTape :: Tape -> String
 pfTape (Tape l h r _) = [fmt|[{l}{boldCol Red [h]}{r}]|]

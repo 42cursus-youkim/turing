@@ -5,6 +5,7 @@ module Machine.Machine
     logfHistory,
     runMachine,
     pprintHistory,
+    benchmarkInputs,
   )
 where
 
@@ -40,8 +41,8 @@ pprintMachine :: Machine -> Int -> IO ()
 pprintMachine m w = putStrLn $ pfMachine m w
 
 -- | Assumes that inputs are correct.
-initMachine :: String -> Program -> Machine
-initMachine s p =
+initMachine :: Program -> String -> Machine
+initMachine p s =
   Machine
     { tape = T.initTape s (P.blank p),
       program = p,
@@ -51,6 +52,16 @@ initMachine s p =
 
 runMachine :: Machine -> [Machine]
 runMachine m = takeWhile (\x -> stuck x == Running) (iterate step m)
+
+benchmarkInput :: Machine -> (Int, Int)
+benchmarkInput m =
+  let result = runMachine m
+      inputLength = T.tapeSize $ tape m
+      step' = length result
+   in (inputLength, step')
+
+benchmarkInputs :: Program -> [String] -> [(Int, Int)]
+benchmarkInputs p = map (benchmarkInput . initMachine p)
 
 lastState :: [Machine] -> MachineState
 lastState = stuck . step . last

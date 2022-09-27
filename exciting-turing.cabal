@@ -30,6 +30,8 @@ executable exciting-turing
   other-modules:
       Arg.Args
       Arg.CommonOpts
+      Arg.FileArgs
+      Arg.Graph
       Arg.TapeInput
       Machine.Machine
       Machine.Tape
@@ -70,6 +72,8 @@ test-suite spec
       Data.UnarySub
       Arg.Args
       Arg.CommonOpts
+      Arg.FileArgs
+      Arg.Graph
       Arg.TapeInput
       Machine.Machine
       Machine.Tape
