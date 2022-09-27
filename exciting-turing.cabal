@@ -55,7 +55,9 @@ executable exciting-turing
   ghc-options: -j8 -O0 -Wall -fno-warn-incomplete-uni-patterns -Wno-unused-imports
 
   build-depends:
-      PyF >=0.11.0
+      Chart >=1.9.4
+    , Chart-diagrams >=1.9.4
+    , PyF >=0.11.0
     , aeson >=2.1.0
     , base >=4.14 && <5
     , bytestring
@@ -101,7 +103,9 @@ test-suite spec
 
   cpp-options: -DTEST
   build-depends:
-      HUnit >=1.6.0.0
+      Chart >=1.9.4
+    , Chart-diagrams >=1.9.4
+    , HUnit >=1.6.0.0
     , PyF >=0.11.0
     , QuickCheck
     , aeson >=2.1.0
