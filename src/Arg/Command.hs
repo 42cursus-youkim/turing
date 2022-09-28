@@ -13,7 +13,7 @@ graphCommand = Graph <$> graphOpts
 
 commands :: Parser Command
 commands =
-  subparser
+  hsubparser
     ( command
         "run"
         ( info
@@ -22,9 +22,7 @@ commands =
                 "run turing machine with single input"
             )
         )
-    )
-    <|> subparser
-      ( command
+        <> command
           "graph"
           ( info
               graphCommand
@@ -32,4 +30,4 @@ commands =
                   "generate a svg graph"
               )
           )
-      )
+    )

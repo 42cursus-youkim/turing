@@ -8,13 +8,13 @@ graphOpts =
   GraphOpts
     <$> argument
       str
-      ( metavar "FILE"
+      ( metavar "INFILE"
           <> help "tapes input file delimited with newlines"
       )
     <*> strOption
       ( long "output"
           <> short 'o'
-          <> metavar "FILE"
+          <> metavar "OUTFILE"
           <> value "graph.svg"
-          <> help "Path to save Graph svg output"
+          <> help "Path to save Graph svg output (default is `graph.svg`)"
       )
