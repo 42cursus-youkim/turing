@@ -14,6 +14,48 @@
       "group": "build"
     },
     {
+      "label": "Feed palindrome",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/palindrome.json run '10100101'",
+      "group": "build"
+    },
+    {
+      "label": "Feed palindrome (fails)",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/palindrome.json run '1010'",
+      "group": "build"
+    },
+    {
+      "label": "Feed 0n1n",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/zero_n_one_n.json run '000111'",
+      "group": "build"
+    },
+    {
+      "label": "Feed 0n1n (fails)",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/zero_n_one_n.json run '011'",
+      "group": "build"
+    },
+    {
+      "label": "Feed 02n",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/zero_2n.json run '0000'",
+      "group": "build"
+    },
+    {
+      "label": "Feed 02n (fails)",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/zero_2n.json run '000'",
+      "group": "build"
+    },
+    {
+      "label": "Feed universal turing machine",
+      "type": "shell",
+      "command": "hpack && cabal run exciting-turing -- script/utm.json run '>010101100111$00-01|00-00-00-00-1|00-01-00-01-1|00-10-00-10-1|00-11-01-00-0|01-01-10-00-0|01-10-11-00-0|10-01-10-01-0|10-10-11-01-0$' --log utm.log",
+      "group": "build"
+    },
+    {
       "label": "Graph unary_add O(N)",
       "type": "shell",
       "command": "hpack && cabal run exciting-turing -- script/unary_add.json graph test/inputs/unary_add.txt",
@@ -35,12 +77,6 @@
       "label": "Feed unary_add (stuck)",
       "type": "shell",
       "command": "hpack && cabal run exciting-turing -- script/stuck.json run '1111+11='",
-      "group": "build"
-    },
-    {
-      "label": "Feed universal turing machine",
-      "type": "shell",
-      "command": "hpack && cabal run exciting-turing -- script/utm.json run '>010101100111$00-01|00-00-00-00-1|00-01-00-01-1|00-10-00-10-1|00-11-01-00-0|01-01-10-00-0|01-10-11-00-0|10-01-10-01-0|10-10-11-01-0$' --log utm.log",
       "group": "build"
     }
   ]
